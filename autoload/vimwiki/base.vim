@@ -740,8 +740,10 @@ function! vimwiki#base#edit_file(command, filename, anchor, ...)
     " Make sure no other plugin takes ownership over the new file. Vimwiki
     " rules them all! Well, except for directories, which may be opened with
     " Netrw
-    if &filetype != 'vimwiki' && fname !~ '\m/$'
-      setfiletype vimwiki
+    if vimwiki#vars#get_wikilocal('syntax') == 'default'
+      if &filetype != 'vimwiki' && fname !~ '\m/$'
+        setfiletype vimwiki
+      endif
     endif
   endif
   if a:anchor != ''

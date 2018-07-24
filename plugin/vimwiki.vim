@@ -89,7 +89,9 @@ function! s:setup_new_wiki_buffer()
 
   " this makes that ftplugin/vimwiki.vim and afterwards syntax/vimwiki.vim are
   " sourced
-  setfiletype vimwiki
+  if vimwiki#vars#get_wikilocal('syntax') == 'default'
+    setfiletype vimwiki
+  endif
 
 endfunction
 
@@ -102,8 +104,10 @@ function! s:setup_buffer_enter()
     return
   endif
 
-  if &filetype != 'vimwiki'
-    setfiletype vimwiki
+  if vimwiki#vars#get_wikilocal('syntax') == 'default'
+    if &filetype != 'vimwiki'
+      setfiletype vimwiki
+    endif
   endif
 
   call s:set_global_options()
